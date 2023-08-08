@@ -1,2 +1,37 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<script lang="ts">
+
+  import {onMount} from "svelte";
+  import renderCanvas from "$lib/RenderCanvas";
+  import playerSpriteData from "$lib/PlayerSpriteData";
+
+  let canvas: HTMLCanvasElement;
+
+  function addImageProcess(data){
+    return new Promise((resolve, reject) => {
+      data.image = new Image()
+      data.image.onload = () => resolve(data.image.height)
+      data.image.onerror = reject
+      data.image.src = data.src
+    })
+  }
+
+
+
+  onMount(async () => {
+    await Promise.all(playerSpriteData.map(addImageProcess))
+
+    console.log(playerSpriteData);
+
+
+    renderCanvas(canvas)
+  })
+</script>
+<div class="flex h-screen justify-center">
+    <canvas bind:this={canvas} class="aspect-video object-fill p-4"></canvas>
+</div>
+
+<style lang="postcss">
+    :global(html) {
+        background-color: theme(colors.black);
+    }
+</style>
