@@ -1,23 +1,25 @@
-import Player from "$lib/classes/Player";
+import playerConfigModel from "./PlayerConfigModel";
 import playerVelocityManager from "$lib/PlayerVelocityManager";
-
 import keyDownListener from "$lib/listeners/keyboard/KeyDownListener";
 import keyUpListener from "$lib/listeners/keyboard/KeyUpListener";
 import directions from "$lib/classes/DirectionModel";
 import gamepadListener from "$lib/listeners/GamepadListener";
-
-const player: Player = new Player();
-
+import stateHelper from "$lib/StateHelper";
 export default function renderCanvas(
   canvas: HTMLCanvasElement
 ): void {
 
+
+  const player = playerConfigModel.one
 
   let controllerIndex: number | null;
   if (canvas === null) {
     console.log('canvas not loaded')
     return;
   }
+
+  canvas.width = 640;
+  canvas.height = 360;
 
   const ctx: CanvasRenderingContext2D = canvas.getContext('2d') as unknown as CanvasRenderingContext2D;
   ctx.imageSmoothingEnabled = false;
@@ -47,9 +49,6 @@ export default function renderCanvas(
   });
 
 
-  canvas.width = 640;
-  canvas.height = 360;
-
   animate(canvas, ctx)
 
 
@@ -63,12 +62,16 @@ export default function renderCanvas(
 
 
     if (controllerIndex !== null && controllerIndex > -1) {
-       gamepadListener(navigator.getGamepads()[controllerIndex])
+      gamepadListener(navigator.getGamepads()[controllerIndex])
     }
-
 
     playerVelocityManager(player, directions)
     player.update(ctx);
+
+    ctx.fillStyle = '#000';
+    ctx.font = "20px serif";
+    ctx.fillText(`State: ${stateHelper.state}`, 5, 25)
+    ctx.fillText(`Sent: ${stateHelper.sent}`, 5, 55)
 
     window.requestAnimationFrame(() => animate(canvas, ctx))
   }

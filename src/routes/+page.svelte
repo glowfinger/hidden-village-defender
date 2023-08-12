@@ -20,9 +20,6 @@
   onMount(async () => {
     await Promise.all(playerSpriteData.map(addImageProcess))
 
-    console.log(playerSpriteData);
-
-
     renderCanvas(canvas)
   })
 </script>

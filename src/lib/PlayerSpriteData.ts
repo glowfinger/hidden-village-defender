@@ -63,17 +63,6 @@ const data: SpriteData[] = [
     image: null
   },
   {
-    action: 'technique',
-    border: 1,
-    w: 67,
-    h: 58,
-    frames: 9,
-    rate: 2,
-    src: technique,
-    steps: [],
-    image: null
-  },
-  {
     action: 'turning',
     border: 1,
     w: 86,
