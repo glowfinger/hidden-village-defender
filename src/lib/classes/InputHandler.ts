@@ -1,42 +1,74 @@
-import keyDownListener from "$lib/listeners/keyboard/KeyDownListener";
-import keyUpListener from "$lib/listeners/keyboard/KeyUpListener";
-
+import stateHelper from "$lib/StateHelper";
 
 export default class InputHandler {
 
+  private keys: string[] = [];
 
-  private keys: string[];
+  private watchedKeys: string[] = [
+    'Enter', 'Shift',
+    'j', 'k', 'l', 'i',
+    ' ', 'a', 's', 'd', 'w',
+  ];
+
+  private controllers: number[] = [];
+
+  private buttons: number[] = [];
+
+  private axes: number[] = [];
 
   constructor() {
 
-    window.addEventListener('keydown', (e) => {
-      console.log(e.type, e.key)
+    this.watchedKeys = this.watchedKeys.map(s => s.toLowerCase())
+
+    window.addEventListener('keydown', (e: KeyboardEvent) => {
+      const key: string = e.key.toLowerCase();
+      if (this.watchedKeys.includes(key) && !this.keys.includes(key)) {
+        this.keys.push(key)
+      }
+      stateHelper.keys = this.keys;
     });
 
-    window.addEventListener('keyup', (e) => {
-      console.log(e.type, e.key)
+    window.addEventListener('keyup', (e: KeyboardEvent) => {
+      const key: string = e.key.toLowerCase();
+      if (this.watchedKeys.includes(key) && this.keys.includes(key)) {
+        const index = this.keys.indexOf(key);
+        this.keys.splice(index)
+      }
+      stateHelper.keys = this.keys;
     });
 
-    window.addEventListener("gamepadconnected", (e) => {
-      console.log(
-        "Gamepad connected at index %d: %s. %d buttons, %d axes.",
-        e.gamepad.index,
-        e.gamepad.id,
-        e.gamepad.buttons.length,
-        e.gamepad.axes.length,
-      );
+    window.addEventListener("gamepadconnected", (e: GamepadEvent): void => {
+      const index: number = e.gamepad.index
+      if (!this.controllers.includes(index)) {
+        this.controllers[index] = index
+      }
 
+      stateHelper.controllers = this.controllers;
     });
 
+    window.addEventListener("gamepaddisconnected", (e: GamepadEvent): void => {
+      const index = e.gamepad.index
+      if (this.controllers.includes(index)) {
+        delete this.controllers[index];
+      }
 
-    window.addEventListener("gamepaddisconnected", (e) => {
-      console.log(
-        "Gamepad disconnected from index %d: %s",
-        e.gamepad.index,
-        e.gamepad.id,
-      );
-
+      stateHelper.controllers = this.controllers;
     });
   }
 
+  update() {
+    // TODO multiple controllers will break this
+    this.controllers.forEach((index) => {
+      const gamepad = navigator.getGamepads()[index];
+      if (gamepad === null) {
+        return;
+      }
+
+      gamepad.buttons.forEach((button: GamepadButton, i: number) => this.buttons[i] = button.value);
+      gamepad.axes.forEach((value: number, i: number) => this.axes[i] = value);
+    })
+
+    stateHelper.buttons = this.buttons;
+    stateHelper.axes = this.axes;
+  }
 }

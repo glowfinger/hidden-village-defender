@@ -72,9 +72,7 @@ export default class Player {
       this.drawnFrames = 0;
     }
 
-
     this.position.x += this.velocity
-
   }
 
 
