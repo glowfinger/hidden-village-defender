@@ -1,22 +1,17 @@
-// image.src = neji;
-
-import playerSpriteData from "$lib/PlayerSpriteData";
+import playerSpriteData from "$lib/classes/player/PlayerSpriteData";
 import type SpriteData from "$lib/interfaces/SpriteData";
 import directions from "$lib/classes/DirectionModel";
-
-
 export default class Player {
 
-  direction = 'left'
+  direction = 'right'
 
-  animations = {
-    'idle': playerSpriteData[0],
-    'walk': playerSpriteData[1],
-    'run': playerSpriteData[2],
+  animations = [
+    playerSpriteData[0],
+    playerSpriteData[1],
+    playerSpriteData[2],
+  ]
 
-  }
-
-  currentAnimation: SpriteData = this.animations.idle;
+  currentAnimation: SpriteData = this.animations[0];
 
 
   position: { x: number; y: number };
@@ -37,15 +32,25 @@ export default class Player {
     };
 
     this.velocity = 0;
+
   }
 
-  draw(c: CanvasRenderingContext2D) {
-
+  render(c: CanvasRenderingContext2D) {
 
     const data = this.currentAnimation
     if (data.image === null) {
       return;
     }
+
+    if (directions[0].left) {
+      this.direction = 'left'
+    } else if (directions[0].right) {
+      this.direction = 'right'
+    }
+
+
+
+
 
     this.currentFrame = this.currentFrame % data.frames;
     let srcX = this.currentFrame * data.w + data.border;
@@ -55,8 +60,11 @@ export default class Player {
     if (this.direction === 'left') {
       srcX = data.w * data.frames - (this.currentFrame + 1) * data.w + data.border
       srcY = data.h + data.border
-
     }
+
+
+
+
 
     c.drawImage(
       data.image,
@@ -75,32 +83,31 @@ export default class Player {
     this.position.x += this.velocity
   }
 
-
   setAnimation(key: string) {
-    if (key in this.animations) {
-      this.currentAnimation = this.animations[key]
+
+    if (directions[0].left) {
+      this.direction = 'left'
+    } else if (directions[0].right) {
+      this.direction = 'right'
+    }
+
+    if (key in this.animations && 0 in this.animations) {
+      this.currentAnimation = this.animations[0]
       this.currentFrame = 0;
 
-
-      if (directions.left) {
-
+      if (directions[0].left) {
         this.direction = 'left'
       } else {
         this.direction = 'right'
       }
-
-
     } else {
       console.error('Animation key does not exist')
     }
-
-
   }
 
+  update() {
 
-  update(c: CanvasRenderingContext2D,) {
 
 
-    this.draw(c)
   }
 }

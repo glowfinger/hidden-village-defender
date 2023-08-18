@@ -1,38 +1,41 @@
-import InputHandler from "$lib/classes/InputHandler";
+import Input from "$lib/classes/input/Input";
+import Player from "$lib/classes/player/Player";
 
 export default class Game {
 
-  private input: InputHandler;
+  private w: number;
+  private h: number;
+  focused = true;
+  private input: Input;
+  private player: Player;
 
 
+  constructor(w: number, h: number) {
+    this.w = w;
+    this.h = h;
+    this.input = new Input(this);
+    this.player = new Player();
 
-
-  constructor() {
-
-
-
-
-    addEventListener("focus", (event) => {
-      console.log(event.type);
+    addEventListener("focus", () => {
+      this.focused = true;
     });
 
-    addEventListener("blur", (event) => {
-      console.log(event.type);
+    addEventListener("blur", () => {
+      this.focused = false;
     });
-
-    this.input = new InputHandler();
-
   }
 
-  update(ctx: CanvasRenderingContext2D) {
 
-
+  update() {
     this.input.update();
-
-    this.draw(ctx);
+    this.player.update();
   }
 
-  draw(ctx: CanvasRenderingContext2D): void {
+  render(ctx: CanvasRenderingContext2D, deltaTime: number): void {
 
+
+
+    this.player.render(ctx)
+    
   }
 }

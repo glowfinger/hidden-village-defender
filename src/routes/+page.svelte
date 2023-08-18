@@ -2,7 +2,7 @@
 
   import {onMount} from "svelte";
   import renderCanvas from "$lib/RenderCanvas";
-  import playerSpriteData from "$lib/PlayerSpriteData";
+  import playerSpriteData from "$lib/classes/player/PlayerSpriteData";
 
   let canvas: HTMLCanvasElement;
 

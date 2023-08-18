@@ -1,7 +1,7 @@
-import type Player from "$lib/classes/Player";
-import type Directions from "$lib/interfaces/Directions";
+import type Player from "$lib/classes/player/Player";
+import type InputDirections from "$lib/classes/input/InputDirections";
 
-export default function playerVelocityManager(player: Player, directions: Directions): void {
+export default function playerVelocityManager(player: Player, directions: InputDirections): void {
 
 
   let velocity = 10
@@ -9,9 +9,6 @@ export default function playerVelocityManager(player: Player, directions: Direct
   const decreaseVelocity = 2;
 
 
-  if (directions.slow) {
-    velocity = 2
-  }
 
   if (directions.left) {
     if (player.velocity <= 0 && player.velocity > -velocity) {

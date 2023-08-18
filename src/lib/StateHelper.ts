@@ -5,6 +5,7 @@ interface StateHelper {
   controllers: number[];
   buttons: number[];
   axes: number[];
+  gameFocus: boolean;
 }
 
 const stateHelper: StateHelper = {
@@ -14,6 +15,7 @@ const stateHelper: StateHelper = {
   controllers: [],
   buttons: [],
   axes: [],
+  gameFocus: true,
 }
 
 export default stateHelper;

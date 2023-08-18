@@ -1,7 +1,5 @@
 import playerConfigModel from "./PlayerConfigModel";
 import playerVelocityManager from "$lib/PlayerVelocityManager";
-import directions from "$lib/classes/DirectionModel";
-import gamepadListener from "$lib/listeners/GamepadListener";
 import Game from "$lib/classes/Game";
 import Debug from "$lib/classes/Debug";
 
@@ -9,27 +7,25 @@ export default function renderCanvas(
   canvas: HTMLCanvasElement
 ): void {
 
-
-  const game = new Game()
-  const debug: Debug = new Debug(true);
-  const player = playerConfigModel.one
-
-  let controllerIndex: number | null;
   if (canvas === null) {
     return;
   }
+  canvasInit(canvas);
 
-  canvas.width = 640;
-  canvas.height = 360;
+  const game = new Game(canvas.width, canvas.height)
+  const debug: Debug = new Debug(true);
 
   const ctx: CanvasRenderingContext2D = canvas.getContext('2d') as unknown as CanvasRenderingContext2D;
   ctx.imageSmoothingEnabled = false;
 
+  let lastTime = 0
 
-  animate(canvas, ctx)
+  animate(0)
 
+  function animate(timestamp: number) {
 
-  function animate(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
+    const deltaTime = timestamp - lastTime;
+    lastTime = timestamp;
 
     ctx.fillStyle = '#ffffff';
     const {x, y} = {x: 0, y: 0};
@@ -37,17 +33,17 @@ export default function renderCanvas(
 
     ctx.fillRect(x, y, w, h);
 
+    game.update();
+    game.render(ctx, deltaTime);
 
-    if (controllerIndex !== null && controllerIndex > -1) {
-      gamepadListener(navigator.getGamepads()[controllerIndex])
-    }
+    debug.update(game)
+    debug.draw(ctx)
 
-    playerVelocityManager(player, directions)
-    player.update(ctx);
-
-    game.update(ctx);
-    debug.update(ctx)
-
-    window.requestAnimationFrame(() => animate(canvas, ctx))
+    window.requestAnimationFrame(animate)
   }
+}
+
+function canvasInit(canvas: HTMLCanvasElement) {
+  canvas.width = 640;
+  canvas.height = 360;
 }

@@ -1,22 +1,19 @@
 import stateHelper from "$lib/StateHelper";
+import type Game from "$lib/classes/Game";
+import directions from "$lib/classes/DirectionModel";
 
-export default class InputHandler {
-
+export default class Input {
   private keys: string[] = [];
-
-  private watchedKeys: string[] = [
-    'Enter', 'Shift',
-    'j', 'k', 'l', 'i',
-    ' ', 'a', 's', 'd', 'w',
-  ];
-
+  private watchedKeys: string[] = ['Enter', 'Shift', 'j', 'k', 'l', 'i', ' ', 'a', 's', 'd', 'w',];
   private controllers: number[] = [];
-
   private buttons: number[] = [];
-
   private axes: number[] = [];
 
-  constructor() {
+  private game: Game;
+
+  constructor(game: Game) {
+
+    this.game = game;
 
     this.watchedKeys = this.watchedKeys.map(s => s.toLowerCase())
 
@@ -68,7 +65,21 @@ export default class InputHandler {
       gamepad.axes.forEach((value: number, i: number) => this.axes[i] = value);
     })
 
+     directions[0]  = updateDirections(this.axes[0], this.axes[1]);
+
+
     stateHelper.buttons = this.buttons;
     stateHelper.axes = this.axes;
+  }
+}
+
+function updateDirections(horizontal: number, vertical: number) {
+  const boundary = 0.25
+
+  return {
+    left: horizontal < -boundary,
+    right: horizontal > boundary,
+    down: vertical > boundary,
+    up: vertical < -boundary,
   }
 }

@@ -1,11 +1,11 @@
-import type Directions from "$lib/interfaces/Directions";
+import type InputDirections from "$lib/classes/input/InputDirections";
 
-const directions: Directions = {
+
+const directionModel: InputDirections[] = [{
   left: false,
   right: false,
   up: false,
-  down: false,
-  slow: false
-}
+  down: false
+}]
 
-export default directions;
+export default directionModel;
