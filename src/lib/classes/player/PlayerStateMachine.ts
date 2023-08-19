@@ -1,50 +1,50 @@
-import {createMachine, interpret,} from "xstate";
-import stateHelper from "$lib/StateHelper";
+import { createMachine, interpret } from 'xstate';
+import stateHelper from '$lib/StateHelper';
 
 export const machine = createMachine(
   {
-    id: "PlayerStateMachine",
-    initial: "idle",
+    id: 'PlayerStateMachine',
+    initial: 'idle',
     states: {
       idle: {
         entry: {
-          type: "playerIdle",
+          type: 'playerIdle',
           params: {},
         },
         on: {
           walk: {
-            target: "walk",
+            target: 'walk',
           },
           run: {
-            target: "run",
+            target: 'run',
           },
         },
       },
       walk: {
         entry: {
-          type: "playerWalk",
+          type: 'playerWalk',
           params: {},
         },
         on: {
           idle: {
-            target: "idle",
+            target: 'idle',
           },
           run: {
-            target: "run",
+            target: 'run',
           },
         },
       },
       run: {
         entry: {
-          type: "playerRun",
+          type: 'playerRun',
           params: {},
         },
         on: {
           idle: {
-            target: "idle",
+            target: 'idle',
           },
           walk: {
-            target: "walk",
+            target: 'walk',
           },
         },
       },
@@ -54,16 +54,11 @@ export const machine = createMachine(
   },
   {
     actions: {
-      playerRun: ({ context, event, action }) => {
-      },
+      playerRun: () => {},
 
-      playerWalk: ({ context, event, action }) => {
-        // ...
-      },
+      playerWalk: () => {},
 
-      playerIdle: ({ context, event, action }) => {
-        // ...
-      },
+      playerIdle: () => {},
     },
     services: {},
     guards: {},
@@ -71,24 +66,18 @@ export const machine = createMachine(
   },
 );
 
-
 const service = interpret(machine);
 
 service
   .onTransition((state, event) => {
     stateHelper.state = state.value.toString();
   })
-  .onEvent((a,) => {
-    stateHelper.sent = a.type
-
+  .onEvent((a) => {
+    stateHelper.sent = a.type;
 
     // stateHelper.sent = state.value.toString();
-  })
+  });
 
 service.start();
 
-
 export default service;
-
-
-

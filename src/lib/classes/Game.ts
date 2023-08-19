@@ -1,14 +1,12 @@
-import Input from "$lib/classes/input/Input";
-import Player from "$lib/classes/player/Player";
+import Input from '$lib/classes/input/Input';
+import Player from '$lib/classes/player/Player';
 
 export default class Game {
-
   private w: number;
   private h: number;
   focused = true;
   private input: Input;
   private player: Player;
-
 
   constructor(w: number, h: number) {
     this.w = w;
@@ -16,15 +14,14 @@ export default class Game {
     this.input = new Input(this);
     this.player = new Player();
 
-    addEventListener("focus", () => {
+    addEventListener('focus', () => {
       this.focused = true;
     });
 
-    addEventListener("blur", () => {
+    addEventListener('blur', () => {
       this.focused = false;
     });
   }
-
 
   update() {
     this.input.update();
@@ -32,10 +29,6 @@ export default class Game {
   }
 
   render(ctx: CanvasRenderingContext2D, deltaTime: number): void {
-
-
-
-    this.player.render(ctx)
-    
+    this.player.render(ctx);
   }
 }

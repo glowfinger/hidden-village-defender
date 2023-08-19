@@ -1,4 +1,4 @@
-const  playerStateEnum = {
+const playerStateEnum = {
   IDLE: 'idle',
   WALK: 'walk',
   RUN: 'run',
@@ -8,7 +8,7 @@ const  playerStateEnum = {
   AIR_DASH: 'airDash',
   CAST_START: 'cast',
   CAST_CANCEL: 'castCancel',
-  CAST_SUCCESS: 'castSuccess'
-}
+  CAST_SUCCESS: 'castSuccess',
+};
 
 export default playerStateEnum;

@@ -16,6 +16,6 @@ const stateHelper: StateHelper = {
   buttons: [],
   axes: [],
   gameFocus: true,
-}
+};
 
 export default stateHelper;
