@@ -1,10 +1,10 @@
-import idle from '$lib/sprites/idle.png'
-import walking from '$lib/sprites/walking.png'
-import running from '$lib/sprites/running.png'
-import technique from '$lib/sprites/technique.png'
-import casting from '$lib/sprites/casting.png'
-import turning from '$lib/sprites/turning.png'
-import type SpriteData from "$lib/interfaces/SpriteData";
+import idle from '$lib/sprites/idle.png';
+import walking from '$lib/sprites/walking.png';
+import running from '$lib/sprites/running.png';
+import technique from '$lib/sprites/technique.png';
+import casting from '$lib/sprites/casting.png';
+import turning from '$lib/sprites/turning.png';
+import type SpriteData from '$lib/interfaces/SpriteData';
 
 const data: SpriteData[] = [
   {
@@ -16,7 +16,7 @@ const data: SpriteData[] = [
     rate: 4,
     src: idle,
     steps: [],
-    image: null
+    image: null,
   },
   {
     action: 'walking',
@@ -27,7 +27,7 @@ const data: SpriteData[] = [
     rate: 4,
     src: walking,
     steps: [],
-    image: null
+    image: null,
   },
   {
     action: 'running',
@@ -38,7 +38,7 @@ const data: SpriteData[] = [
     rate: 2,
     src: running,
     steps: [],
-    image: null
+    image: null,
   },
   {
     action: 'casting',
@@ -49,7 +49,7 @@ const data: SpriteData[] = [
     rate: 2,
     src: casting,
     steps: [],
-    image: null
+    image: null,
   },
   {
     action: 'technique',
@@ -60,18 +60,7 @@ const data: SpriteData[] = [
     rate: 2,
     src: technique,
     steps: [],
-    image: null
-  },
-  {
-    action: 'technique',
-    border: 1,
-    w: 67,
-    h: 58,
-    frames: 9,
-    rate: 2,
-    src: technique,
-    steps: [],
-    image: null
+    image: null,
   },
   {
     action: 'turning',
@@ -82,8 +71,8 @@ const data: SpriteData[] = [
     rate: 2,
     src: turning,
     steps: [],
-    image: null
-  }
+    image: null,
+  },
 ];
 
-export default data
+export default data;
