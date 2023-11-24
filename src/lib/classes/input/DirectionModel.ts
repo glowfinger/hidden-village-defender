@@ -1,4 +1,4 @@
-import type InputDirections from '$lib/classes/input/InputDirections';
+import type InputDirections from '$lib/interfaces/InputDirections';
 
 const directionModel: InputDirections[] = [
   {

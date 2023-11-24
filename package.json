@@ -38,6 +38,7 @@
   "type": "module",
   "dependencies": {
     "@xstate/svelte": "^2.1.0",
+    "phaser": "^3.70.0",
     "xstate": "^4.38.2"
   }
 }

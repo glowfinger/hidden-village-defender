@@ -1,6 +1,6 @@
 import stateHelper from '$lib/StateHelper';
 import type Game from '$lib/classes/Game';
-import directions from '$lib/classes/DirectionModel';
+import directions from '$lib/classes/input/DirectionModel';
 
 export default class Debug {
   debug: boolean;

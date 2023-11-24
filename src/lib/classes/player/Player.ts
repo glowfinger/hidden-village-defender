@@ -1,6 +1,6 @@
 import playerSpriteData from '$lib/classes/player/PlayerSpriteData';
 import type SpriteData from '$lib/interfaces/SpriteData';
-import directions from '$lib/classes/DirectionModel';
+import directions from '$lib/classes/input/DirectionModel';
 import service from '$lib/classes/player/PlayerStateMachine';
 export default class Player {
   direction = 'right';
@@ -81,8 +81,11 @@ export default class Player {
 
     if (directions[0].left || directions[0].right) {
       service.send('run', this);
+      this.currentAnimation = this.animations[1]
     } else {
       service.send('idle', this);
+      this.currentAnimation = this.animations[0]
+
     }
   }
 }
