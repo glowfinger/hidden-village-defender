@@ -33,6 +33,7 @@ function over(this: Phaser.Scene) {
 
 function out(this: Phaser.Scene) {
   this.scene.start('GameScene');
+  this.scene.start('GameUIScene');
 }
 
 function up(this: Phaser.Scene) {

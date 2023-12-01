@@ -1,11 +1,18 @@
+import CameraController from '$lib/phaser/CameraController';
+import PlayerController from '$lib/phaser/PlayerController';
 import Phaser from 'phaser';
 
 export default class GameScene extends Phaser.Scene {
-  private player: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
+  private player?: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
 
-  private cursors: Phaser.Types.Input.Keyboard.CursorKeys;
+  private cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
 
-  private platforms: Phaser.Physics.Arcade.StaticGroup;
+  private gamePad?: Phaser.Types.Input.Gamepad.Pad;
+
+  private platforms?: Phaser.Physics.Arcade.StaticGroup;
+
+  private playerController?: PlayerController;
+  private cameraController?: CameraController;
 
   constructor() {
     super('GameScene');
@@ -14,22 +21,47 @@ export default class GameScene extends Phaser.Scene {
   preload() {
     this.load.image('ground', '/sprites/platforms/basic-platform.png');
     this.load.image('sky', '/backgrounds/night-image.png');
+
+    this.load.atlas('first-sprite', '/sprites/first-sprite.png', '/first-sprite-atlas.json');
+
     this.load.spritesheet({
       key: 'sprite',
+      url: '/sprites/idle.png',
+      frameConfig: {
+        frameWidth: 50,
+        frameHeight: 66,
+        startFrame: 0,
+        endFrame: 7,
+        margin: 0,
+        spacing: 0,
+      },
+    });
+
+    this.load.spritesheet({
+      key: 'sprite-walking',
       url: '/sprites/walking.png',
       frameConfig: {
-        frameWidth: 40,
-        frameHeight: 64,
+        frameWidth: 42,
+        frameHeight: 66,
         startFrame: 0,
-        endFrame: 4,
-        margin: 1,
+        endFrame: 11,
+        margin: 0,
       },
     });
   }
 
   create() {
     this.physics.world.setBounds(0, 0, 3240, 360);
-    this.cursors = this.input.keyboard.createCursorKeys();
+    if (this.input.keyboard) {
+      this.cursors = this.input.keyboard.createCursorKeys();
+    }
+
+    if (this.input.gamepad && this.input.gamepad.total >= 0) {
+      this.input.gamepad.once(
+        'connected',
+        (pad: Phaser.Types.Input.Gamepad.Pad) => (this.gamePad = pad),
+      );
+    }
 
     this.add.tileSprite(0, 0, 3240, 360, 'sky').setOrigin(0, 0);
 
@@ -37,35 +69,19 @@ export default class GameScene extends Phaser.Scene {
     generatePlaforms(this.platforms);
 
     this.player = this.physics.add.sprite(100, 100, 'sprite');
-    this.player.setBounce(0.2);
-    this.player.setCollideWorldBounds(true);
-    this.player.body.setGravityY(300);
-    this.player.setCollideWorldBounds(true);
-    this.physics.add.collider(this.player, this.platforms);
 
-    this.cameras.main.setBounds(0, 0, 3240, 360);
-    this.cameras.main.fadeIn(600);
-    this.cameras.main.startFollow(this.player, true, 1, 1, 0, 0);
+    this.playerController = new PlayerController(this.player, this.gamePad, this.cursors);
+    this.cameraController = new CameraController(this.cameras.main, this.player);
+
+    this.physics.add.collider(this.player, this.platforms);
   }
 
-  update() {
-    if (this.cursors.left.isDown) {
-      this.player.setVelocityX(-160);
-
-      // this.player.anims.play('left', true);
-    } else if (this.cursors.right.isDown) {
-      this.player.setVelocityX(160);
-
-      // this.player.anims.play('right', true);
-    } else {
-      this.player.setVelocityX(0);
-
-      // this.player.anims.play('turn');
+  update(time: number, delta: number) {
+    if (!this.playerController) {
+      return;
     }
 
-    if (this.cursors.up.isDown && this.player.body.touching.down) {
-      this.player.setVelocityY(-330);
-    }
+    this.playerController.update(time, delta);
   }
 }
 
