@@ -1,12 +1,12 @@
 import drawDebugBox from '$lib/classes/debug/DrawDebugBox';
 import type DebugBox from '$lib/classes/debug/DebugBox';
 
-export default function drawHitBox (ctx: CanvasRenderingContext2D, box: DebugBox) {
+export default function drawHitBox(ctx: CanvasRenderingContext2D, box: DebugBox) {
   if (!box) {
-    return
+    return;
   }
-  const colour = 'yellow'
-  const name = 'Hit'
+  const colour = 'yellow';
+  const name = 'Hit';
 
-  drawDebugBox(ctx, box, colour, name)
+  drawDebugBox(ctx, box, colour, name);
 }

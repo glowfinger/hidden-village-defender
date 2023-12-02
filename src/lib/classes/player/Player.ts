@@ -81,11 +81,10 @@ export default class Player {
 
     if (directions[0].left || directions[0].right) {
       service.send('run', this);
-      this.currentAnimation = this.animations[1]
+      this.currentAnimation = this.animations[1];
     } else {
       service.send('idle', this);
-      this.currentAnimation = this.animations[0]
-
+      this.currentAnimation = this.animations[0];
     }
   }
 }
