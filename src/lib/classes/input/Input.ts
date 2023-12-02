@@ -87,21 +87,20 @@ function updateDirectionButtons(horizontal: number, vertical: number) {
 }
 
 function updateDirectionButtonsKeys(directions: InputDirections, keys: string[]) {
-
-  if(keys.includes('a')) {
-    directions.left  =  !directions.left
+  if (keys.includes('a')) {
+    directions.left = !directions.left;
   }
 
-  if(keys.includes('s')) {
-    directions.down  =  !directions.down
+  if (keys.includes('s')) {
+    directions.down = !directions.down;
   }
 
-  if(keys.includes('d')) {
-    directions.right  =  !directions.right
+  if (keys.includes('d')) {
+    directions.right = !directions.right;
   }
 
-  if(keys.includes('w')) {
-    directions.up  =  !directions.up
+  if (keys.includes('w')) {
+    directions.up = !directions.up;
   }
 
   return directions;

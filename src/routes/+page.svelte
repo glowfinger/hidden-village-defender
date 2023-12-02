@@ -1,31 +1,18 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import renderCanvas from '$lib/RenderCanvas';
-  import playerSpriteData from '$lib/classes/player/PlayerSpriteData';
+  import { onDestroy, onMount } from 'svelte';
+  import { Game } from 'phaser';
+  import GameConfig from '$lib/classes/game/GameConfig';
+  import gameSceneConfig from '$lib/classes/game/GameSceneConfig';
 
-  let canvas: HTMLCanvasElement;
+  let game: Game;
 
-  function addImageProcess(data) {
-    return new Promise((resolve, reject) => {
-      data.image = new Image();
-      data.image.onload = () => resolve(data.image.height);
-      data.image.onerror = reject;
-      data.image.src = data.src;
-    });
-  }
-
-  onMount(async () => {
-    await Promise.all(playerSpriteData.map(addImageProcess));
-    renderCanvas(canvas);
+  onMount(() => {
+    game = new Game(GameConfig);
+    gameSceneConfig(game);
+  });
+  onDestroy(() => {
+    game.destroy(true, false);
   });
 </script>
 
-<div class="flex h-screen justify-center">
-  <canvas bind:this={canvas} class="aspect-video object-fill p-4" />
-</div>
-
-<style lang="postcss">
-  :global(html) {
-    background-color: theme(colors.black);
-  }
-</style>
+<div id="game-holder" class="flex justify-center bg-slate-500" />

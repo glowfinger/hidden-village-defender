@@ -1,0 +1,39 @@
+{
+  "textures": [
+    {
+      "image": "idle.png",
+      "size": {
+        "w": 954,
+        "h": 7154
+      },
+      "scale": 1,
+      "sourceSize": {
+        "w": 48,
+        "h": 64
+      },
+      "frames": [
+        {
+          "filename": "idle1",
+          "rotated": false,
+          "trimmed": true,
+          "sourceSize": {
+            "w": 192,
+            "h": 192
+          },
+          "spriteSourceSize": {
+            "x": 1,
+            "y": 0,
+            "w": 188,
+            "h": 192
+          },
+          "frame": {
+            "x": 1,
+            "y": 1,
+            "w": 188,
+            "h": 192
+          }
+        }
+      ]
+    }
+  ]
+}
