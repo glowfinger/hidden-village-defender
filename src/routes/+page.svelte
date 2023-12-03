@@ -1,8 +1,8 @@
 <script lang="ts">
   import { onDestroy, onMount } from 'svelte';
   import { Game } from 'phaser';
-  import GameConfig from '$lib/classes/game/GameConfig';
-  import gameSceneConfig from '$lib/classes/game/GameSceneConfig';
+  import GameConfig from '$lib/phaser/game/GameConfig';
+  import gameSceneConfig from '$lib/phaser/game/GameSceneConfig';
 
   let game: Game;
 

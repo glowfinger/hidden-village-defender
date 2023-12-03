@@ -11,6 +11,10 @@ export default class GameUIScene extends Phaser.Scene {
     this.load.image('mana-wind', '/sprites/mana-icon-green.png');
     this.load.image('mana-fire', '/sprites/mana-icon-blue.png');
     this.load.image('mana-water', '/sprites/mana-icon-purple.png');
+
+    this.load.on('complete', () => {
+      console.log('GameUIScene preload complete');
+    });
   }
 
   create() {

@@ -1,5 +1,5 @@
 import { AUTO } from 'phaser';
-import PhysicsConfig from './PhysicsConfig';
+import PhysicsConfig from '$lib/phaser/game/PhysicsConfig';
 
 const GameConfig: Phaser.Types.Core.GameConfig = {
   banner: false,
