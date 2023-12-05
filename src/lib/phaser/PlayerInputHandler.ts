@@ -1,5 +1,3 @@
-import Phaser from 'phaser';
-
 export class PlayerInpuHandler {
   private up: boolean = false;
   private down: boolean = false;
@@ -7,7 +5,10 @@ export class PlayerInpuHandler {
   private right: boolean = false;
   private jump: boolean = false;
 
-  constructor() {}
+  constructor(
+    gamePad: Phaser.Types.Input.Gamepad.Pad | undefined,
+    cursors: Phaser.Types.Input.Keyboard.CursorKeys | undefined,
+  ) {}
 
   public update() {}
 }
