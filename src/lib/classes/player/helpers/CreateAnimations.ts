@@ -28,6 +28,26 @@ function createAnimation(sprite: Phaser.Physics.Arcade.Sprite) {
     frameRate: 10,
     repeat: -1,
   });
+
+  sprite.anims.create({
+    key: 'falling',
+    frames: sprite.anims.generateFrameNumbers('sprite-falling', {
+      start: 0,
+      end: 1,
+    }),
+    frameRate: 10,
+    repeat: -1,
+  });
+
+  sprite.anims.create({
+    key: 'jumping',
+    frames: sprite.anims.generateFrameNumbers('sprite-jumping', {
+      start: 0,
+      end: 1,
+    }),
+    frameRate: 10,
+    repeat: -1,
+  });
 }
 
 export default createAnimation;

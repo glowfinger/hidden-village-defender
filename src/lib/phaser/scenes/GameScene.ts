@@ -48,6 +48,30 @@ export default class GameScene extends Phaser.Scene {
         margin: 0,
       },
     });
+
+    this.load.spritesheet({
+      key: 'sprite-falling',
+      url: '/sprites/falling.png',
+      frameConfig: {
+        frameWidth: 42,
+        frameHeight: 74,
+        startFrame: 0,
+        endFrame: 1,
+        margin: 0,
+      },
+    });
+
+    this.load.spritesheet({
+      key: 'sprite-jumping',
+      url: '/sprites/jumping.png',
+      frameConfig: {
+        frameWidth: 34,
+        frameHeight: 66,
+        startFrame: 0,
+        endFrame: 1,
+        margin: 0,
+      },
+    });
   }
 
   create() {
@@ -91,4 +115,6 @@ function generatePlaforms(platforms: Phaser.Physics.Arcade.StaticGroup) {
   for (let i = 0; i * 32 < 3240; i++) {
     platforms.create(i * 32, y, 'ground');
   }
+
+  platforms.create(320, 160, 'ground');
 }
